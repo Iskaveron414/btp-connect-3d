@@ -192,37 +192,61 @@ function sign(text,x,y,z){
 sign('RAYON CIMENT',-7,3.6,-3);
 sign('RAYON FER',7,3.6,-3);
 
-// Navigation tactile : rotation de la caméra
-let dragging=false;
-let lastX=0;
-let lastY=0;
-let angle=0;
-let vertical=0;
+ // Navigation tactile : rotation fluide
+let dragging = false;
+let lastX = 0;
+let lastY = 0;
 
-renderer.domElement.addEventListener('pointerdown',e=>{
- dragging=true;
- lastX=e.clientX;
- lastY=e.clientY;
-});
-window.addEventListener('pointerup',()=>dragging=false);
-window.addEventListener('pointermove',e=>{
- if(!dragging)return;
- angle-=(e.clientX-lastX)*0.004;
- vertical+=(e.clientY-lastY)*0.003;
- vertical=Math.max(-0.35,Math.min(0.35,vertical));
- lastX=e.clientX;
- lastY=e.clientY;
- camera.rotation.order='YXZ';
- camera.rotation.y=angle;
- camera.rotation.x=vertical;
+let angle = 0;
+let vertical = 0;
+
+let targetAngle = 0;
+let targetVertical = 0;
+
+renderer.domElement.style.touchAction = "none";
+
+renderer.domElement.addEventListener('pointerdown', e => {
+  dragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
 });
 
-// Affichage
-function animate(){
- requestAnimationFrame(animate);
- renderer.render(scene,camera);
+window.addEventListener('pointerup', () => {
+  dragging = false;
+});
+
+window.addEventListener('pointermove', e => {
+  if (!dragging) return;
+
+  targetAngle -= (e.clientX - lastX) * 0.002;
+  targetVertical += (e.clientY - lastY) * 0.0015;
+
+  targetVertical = Math.max(
+    -0.35,
+    Math.min(0.35, targetVertical)
+  );
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
+
+// Affichage avec amortissement
+camera.rotation.order = 'YXZ';
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  camera.rotation.y +=
+    (targetAngle - camera.rotation.y) * 0.08;
+
+  camera.rotation.x +=
+    (targetVertical - camera.rotation.x) * 0.08;
+
+  renderer.render(scene, camera);
 }
+
 animate();
+
 
 window.addEventListener('resize',()=>{
  camera.aspect=window.innerWidth/window.innerHeight;
