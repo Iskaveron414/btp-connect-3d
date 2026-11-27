@@ -257,49 +257,57 @@ window.addEventListener('resize',()=>{
 </body>
 
  <style>
+  
+
+<style>
 #catalogue-btp {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  font-family: Arial, sans-serif;
+  position:fixed; bottom:18px; left:50%;
+  transform:translateX(-50%); z-index:1000;
+  font-family:Arial,sans-serif;
 }
 #ouvrir-catalogue {
-  background: #16834a;
-  color: white;
-  border: 0;
-  border-radius: 25px;
-  padding: 13px 22px;
-  font-weight: bold;
+  background:#16834a;color:white;border:0;
+  border-radius:25px;padding:14px 22px;
+  font-weight:bold;font-size:15px;
 }
 #fenetre-catalogue {
-  display: none;
-  position: fixed;
-  inset: 5%;
-  z-index: 1001;
-  background: white;
-  color: #222;
-  border-radius: 14px;
-  padding: 16px;
-  overflow-y: auto;
-  font-family: Arial, sans-serif;
+  display:none;position:fixed;inset:3%;
+  z-index:1001;background:#f7f8f7;color:#222;
+  border-radius:15px;padding:16px;
+  overflow-y:auto;font-family:Arial,sans-serif;
 }
-#fenetre-catalogue h2 { margin-top: 4px; }
+#fenetre-catalogue h2 {color:#16834a;margin-top:8px}
+#fermer-catalogue {
+  float:right;background:#333;color:white;
+  border:0;border-radius:8px;padding:9px;
+}
 .produit-btp {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 12px;
-  margin: 10px 0;
+  background:white;border:1px solid #ddd;
+  border-radius:10px;padding:12px;margin:10px 0;
 }
-.produit-btp button, #fermer-catalogue {
-  background: #16834a;
-  color: white;
-  border: 0;
-  border-radius: 7px;
-  padding: 9px 12px;
+.produit-btp button,.quantite button {
+  background:#16834a;color:white;border:0;
+  border-radius:7px;padding:9px 13px;
 }
-#fermer-catalogue { float: right; background: #444; }
+.produit-btp p {margin:7px 0}
+#panier-btp {
+  background:white;border-radius:12px;
+  padding:14px;margin-top:18px;
+}
+.ligne-panier {
+  display:flex;justify-content:space-between;
+  align-items:center;gap:8px;
+  border-bottom:1px solid #ddd;padding:10px 0;
+}
+.quantite {display:flex;align-items:center;gap:8px}
+.quantite button {padding:6px 10px}
+.supprimer {background:#b52b2b!important}
+#commander-whatsapp {
+  display:block;width:100%;margin-top:15px;
+  background:#16834a;color:white;
+  text-align:center;text-decoration:none;
+  padding:14px;border-radius:9px;font-weight:bold;
+}
 </style>
 
 <div id="catalogue-btp">
@@ -308,42 +316,140 @@ window.addEventListener('resize',()=>{
 
 <div id="fenetre-catalogue">
   <button id="fermer-catalogue">Fermer ✕</button>
-  <h2>Catalogue BTP Connect</h2>
-  <p>Nos matériaux de construction</p>
+  <h2>BTP CONNECT</h2>
+  <p>Catalogue des matériaux de construction</p>
 
-  <h3>Ciment</h3>
+  <h3>🧱 Ciment</h3>
+
   <div class="produit-btp">
     <strong>Ciment CPA 45</strong>
     <p>Prix indicatif : 115 000 F CFA</p>
-    <button onclick="ajouterAuPanier('Ciment CPA 45')">Ajouter au panier</button>
+    <button onclick="ajouterAuPanier('Ciment CPA 45')">Ajouter</button>
   </div>
+
   <div class="produit-btp">
     <strong>Ciment CPJ</strong>
     <p>Prix indicatif : 100 000 F CFA</p>
-    <button onclick="ajouterAuPanier('Ciment CPJ')">Ajouter au panier</button>
+    <button onclick="ajouterAuPanier('Ciment CPJ')">Ajouter</button>
   </div>
 
-  <h3>Fer à béton</h3>
+  <h3>🔩 Fer à béton</h3>
+
   <div class="produit-btp">
     <strong>Fer à béton 6 mm</strong>
-    <button onclick="ajouterAuPanier('Fer à béton 6 mm')">Ajouter au panier</button>
-  </div>
-  <div class="produit-btp">
-    <strong>Fer à béton 8 mm</strong>
-    <button onclick="ajouterAuPanier('Fer à béton 8 mm')">Ajouter au panier</button>
-  </div>
-  <div class="produit-btp">
-    <strong>Fer à béton 10 mm</strong>
-    <button onclick="ajouterAuPanier('Fer à béton 10 mm')">Ajouter au panier</button>
-  </div>
-  <div class="produit-btp">
-    <strong>Fer à béton 12 mm</strong>
-    <button onclick="ajouterAuPanier('Fer à béton 12 mm')">Ajouter au panier</button>
+    <button onclick="ajouterAuPanier('Fer à béton 6 mm')">Ajouter</button>
   </div>
 
-  <h3>Mon panier : <span id="nombre-panier">0</span></h3>
-  <ul id="liste-panier"></ul>
+  <div class="produit-btp">
+    <strong>Fer à béton 8 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 8 mm')">Ajouter</button>
+  </div>
+
+  <div class="produit-btp">
+    <strong>Fer à béton 10 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 10 mm')">Ajouter</button>
+  </div>
+
+  <div class="produit-btp">
+    <strong>Fer à béton 12 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 12 mm')">Ajouter</button>
+  </div>
+
+  <div id="panier-btp">
+    <h3>🛒 Mon panier (<span id="nombre-panier">0</span>)</h3>
+    <div id="liste-panier">Ton panier est vide.</div>
+    <a id="commander-whatsapp" href="#" target="_blank">
+      Commander sur WhatsApp
+    </a>
+  </div>
 </div>
+
+<script>
+const fenetreCatalogue = document.getElementById('fenetre-catalogue');
+
+document.getElementById('ouvrir-catalogue').onclick = () => {
+  fenetreCatalogue.style.display = 'block';
+};
+
+document.getElementById('fermer-catalogue').onclick = () => {
+  fenetreCatalogue.style.display = 'none';
+};
+
+let panierBTP = {};
+
+function ajouterAuPanier(nom) {
+  panierBTP[nom] = (panierBTP[nom] || 0) + 1;
+  afficherPanier();
+}
+
+function modifierQuantite(nom, changement) {
+  panierBTP[nom] += changement;
+  if (panierBTP[nom] <= 0) {
+    delete panierBTP[nom];
+  }
+  afficherPanier();
+}
+
+function afficherPanier() {
+  const liste = document.getElementById('liste-panier');
+  const nombre = Object.values(panierBTP)
+    .reduce((total, qte) => total + qte, 0);
+
+  document.getElementById('nombre-panier').textContent = nombre;
+
+  liste.innerHTML = '';
+
+  if (nombre === 0) {
+    liste.textContent = 'Ton panier est vide.';
+    return;
+  }
+
+  for (const nom in panierBTP) {
+    const ligne = document.createElement('div');
+    ligne.className = 'ligne-panier';
+
+    const nomProduit = document.createElement('strong');
+    nomProduit.textContent = nom;
+
+    const controles = document.createElement('div');
+    controles.className = 'quantite';
+
+    const moins = document.createElement('button');
+    moins.textContent = '−';
+    moins.onclick = () => modifierQuantite(nom, -1);
+
+    const qte = document.createElement('span');
+    qte.textContent = panierBTP[nom];
+
+    const plus = document.createElement('button');
+    plus.textContent = '+';
+    plus.onclick = () => modifierQuantite(nom, 1);
+
+    const supprimer = document.createElement('button');
+    supprimer.textContent = '×';
+    supprimer.className = 'supprimer';
+    supprimer.onclick = () => {
+      delete panierBTP[nom];
+      afficherPanier();
+    };
+
+    controles.append(moins, qte, plus, supprimer);
+    ligne.append(nomProduit, controles);
+    liste.appendChild(ligne);
+  }
+
+  const message = 'Bonjour BTP Connect ! Je souhaite commander :\n\n' +
+    Object.entries(panierBTP)
+      .map(([nom, qte]) => nom + ' : ' + qte)
+      .join('\n') +
+    '\n\nMerci de me confirmer les prix et la disponibilité.';
+
+  document.getElementById('commander-whatsapp').href =
+    'https://wa.me/22675826037?text=' + encodeURIComponent(message);
+}
+
+afficherPanier();
+</script>
 
 <script>
 const fenetreCatalogue = document.getElementById('fenetre-catalogue');
