@@ -255,5 +255,118 @@ window.addEventListener('resize',()=>{
 });
 </script>
 </body>
+
+ <style>
+#catalogue-btp {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+#ouvrir-catalogue {
+  background: #16834a;
+  color: white;
+  border: 0;
+  border-radius: 25px;
+  padding: 13px 22px;
+  font-weight: bold;
+}
+#fenetre-catalogue {
+  display: none;
+  position: fixed;
+  inset: 5%;
+  z-index: 1001;
+  background: white;
+  color: #222;
+  border-radius: 14px;
+  padding: 16px;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+}
+#fenetre-catalogue h2 { margin-top: 4px; }
+.produit-btp {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+}
+.produit-btp button, #fermer-catalogue {
+  background: #16834a;
+  color: white;
+  border: 0;
+  border-radius: 7px;
+  padding: 9px 12px;
+}
+#fermer-catalogue { float: right; background: #444; }
+</style>
+
+<div id="catalogue-btp">
+  <button id="ouvrir-catalogue">Voir le catalogue</button>
+</div>
+
+<div id="fenetre-catalogue">
+  <button id="fermer-catalogue">Fermer ✕</button>
+  <h2>Catalogue BTP Connect</h2>
+  <p>Nos matériaux de construction</p>
+
+  <h3>Ciment</h3>
+  <div class="produit-btp">
+    <strong>Ciment CPA 45</strong>
+    <p>Prix indicatif : 115 000 F CFA</p>
+    <button onclick="ajouterAuPanier('Ciment CPA 45')">Ajouter au panier</button>
+  </div>
+  <div class="produit-btp">
+    <strong>Ciment CPJ</strong>
+    <p>Prix indicatif : 100 000 F CFA</p>
+    <button onclick="ajouterAuPanier('Ciment CPJ')">Ajouter au panier</button>
+  </div>
+
+  <h3>Fer à béton</h3>
+  <div class="produit-btp">
+    <strong>Fer à béton 6 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 6 mm')">Ajouter au panier</button>
+  </div>
+  <div class="produit-btp">
+    <strong>Fer à béton 8 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 8 mm')">Ajouter au panier</button>
+  </div>
+  <div class="produit-btp">
+    <strong>Fer à béton 10 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 10 mm')">Ajouter au panier</button>
+  </div>
+  <div class="produit-btp">
+    <strong>Fer à béton 12 mm</strong>
+    <button onclick="ajouterAuPanier('Fer à béton 12 mm')">Ajouter au panier</button>
+  </div>
+
+  <h3>Mon panier : <span id="nombre-panier">0</span></h3>
+  <ul id="liste-panier"></ul>
+</div>
+
+<script>
+const fenetreCatalogue = document.getElementById('fenetre-catalogue');
+document.getElementById('ouvrir-catalogue').onclick = () => {
+  fenetreCatalogue.style.display = 'block';
+};
+document.getElementById('fermer-catalogue').onclick = () => {
+  fenetreCatalogue.style.display = 'none';
+};
+
+let panierBTP = [];
+
+function ajouterAuPanier(nom) {
+  panierBTP.push(nom);
+  document.getElementById('nombre-panier').textContent = panierBTP.length;
+  const liste = document.getElementById('liste-panier');
+  liste.innerHTML = '';
+  panierBTP.forEach(produit => {
+    const ligne = document.createElement('li');
+    ligne.textContent = produit;
+    liste.appendChild(ligne);
+  });
+}
+</script>
   </html>
   
